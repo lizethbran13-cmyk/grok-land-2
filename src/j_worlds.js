@@ -330,12 +330,12 @@ function buildRatita1() {
 // =====================================================================
 // WORLD 3-1 — SHELL-TOUGH TEST TRACK (Tortuga Tech, with Torty)
 // =====================================================================
-function techEnv() {
+function techEnv(long) {
   setupEnv({ top: 0x3a9aff, horizon: 0xd8fff0, bottom: 0x8ad8c0, fog: 0xd8fff0, fogNear: 90, fogFar: 300, hemiSky: 0xffffff, hemiGround: 0x5a9a7a, hemiI: 0.8, sunColor: 0xfff6e0, sunI: 1.0, amb: 0.22, sunSprite: 0xfff3b0 });
   W.killY = -6;
   const water = new THREE.Mesh(new THREE.PlaneGeometry(1400, 1400), mat(0x2fc0b0, { transparent: true, opacity: 0.88, roughness: 0.2 })); water.rotation.x = -Math.PI / 2; water.position.y = -3.2; W.root.add(water); W.water = water;
   const r = mulberry(71);
-  for (let i = 0; i < 16; i++) { const a = (i / 16) * TAU, d = 170 + r() * 60, s = 30 + r() * 30; const h = M(G.sphereLo, [0x59d65a, 0x3fbf4a][i % 2], s, s * 0.5, s); h.position.set(Math.cos(a) * d, -10, Math.sin(a) * d - 50); (W.deco || W.root).add(h); }
+  for (let i = 0; i < 16; i++) { const a = (i / 16) * TAU, d = 170 + r() * 60, s = 30 + r() * 30; const h = M(G.sphereLo, [0x59d65a, 0x3fbf4a][i % 2], s, s * 0.5, s); if (long) h.position.set(Math.cos(a) * (d + 40), -10, Math.sin(a) * (d + 40) * 1.9 - 290); else h.position.set(Math.cos(a) * d, -10, Math.sin(a) * d - 50); (W.deco || W.root).add(h); }
   skyClouds(16, 35, 70, 70, 220, 9);
 }
 function dTestDummy(x, top, z) {

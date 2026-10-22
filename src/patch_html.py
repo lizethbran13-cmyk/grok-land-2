@@ -41,3 +41,4 @@ rep('''    <div class="card hidden" id="gameover-card">''','''    <div class="ca
     <div class="card hidden" id="gameover-card">''')
 rep('<div id="loading">LOADING GROK LAND&hellip;</div>','<div id="loading">LOADING GROK LAND 2&hellip;</div>')
 open(P,'w').write(s)
+# cache-bust (boost zones v2) - applied directly in index.html: style.css?v=bz2, game.js?v=bz2

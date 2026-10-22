@@ -24,7 +24,8 @@ const LEVELS = [];
 NEW_LEVELS.forEach((L) => LEVELS.push(L));
 const BOOST_W = (LEVELS.length ? LEVELS[LEVELS.length - 1].world : 0) + 1;
 LEVELS.push({ name: 'MEADOW RUSH', sub: 'BOOST 1', world: BOOST_W, worldName: 'BOOST ZONES', song: 10, build: buildRush, start: [0, 0, 13], blurb: 'Open zone · grind rails · homing pods · a rail loop', isNew: true, boost: true });
-if (typeof buildCanyonRush === 'function') LEVELS.push({ name: 'CANYON RUSH', sub: 'BOOST 2', world: BOOST_W, worldName: 'BOOST ZONES', song: 10, build: buildCanyonRush, start: [0, 0, 13], blurb: 'Desert open zone · canyon rails · mine-cart jumps', isNew: true, boost: true });
+if (typeof buildCanyonRush === 'function') LEVELS.push({ name: 'CANYON RUSH', sub: 'BOOST 2', world: BOOST_W, worldName: 'BOOST ZONES', song: 10, build: buildCanyonRush, start: [0, 0, 13], blurb: 'Desert open zone · mine rails · the Gold Rush Loop', isNew: true, boost: true });
+if (typeof buildSpeedwayRush === 'function') LEVELS.push({ name: 'SHELL SPEEDWAY', sub: 'BOOST 3', world: BOOST_W, worldName: 'BOOST ZONES', song: 11, build: buildSpeedwayRush, start: [0, 0, 13], blurb: 'Tortuga Tech race track · banked rails · chicane', isNew: true, boost: true });
 const CLASSIC_W0 = BOOST_W;
 CLASSIC_DEFS.forEach((L, k) => {
   const cw = L.cw || (k + 1), sub = cw >= 7 ? 'CLASSIC ' + cw + '-' + (k - (cw === 7 ? 6 : 9) + 1) : 'CLASSIC ' + cw;

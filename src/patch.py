@@ -110,7 +110,7 @@ rep("const MAP_COLORS = ['#3fbf46', '#9b6bff', '#e0502c', '#38b6ff', '#7a4ad8', 
     "const MAP_COLORS = ['#e07a3a', '#f5c542', '#3a9a6a', '#3ff0ff', '#3fbf46', '#9b6bff', '#e0502c', '#38b6ff', '#7a4ad8', '#d08a2a', '#14b8a6', '#3a3f9a', '#ff4fd8', '#4ade80'];")
 rep("  $('complete-title').textContent = last ? 'YOU BEAT GROK LAND 2.0!' : 'COURSE CLEAR!';","  $('complete-title').textContent = last ? 'YOU BEAT GROK LAND 2!' : (LEVELS[curLevel].boost ? 'ZONE CLEAR!' : 'COURSE CLEAR!');")
 rep("  rows.push(['All-time stars', allStars + ' / ' + (LEVELS.length * 3)]);",
-"""  if (W.boost) { const rk = W.boost.rank, t = run.time, R = t <= rk[0] ? 'S' : t <= rk[1] ? 'A' : t <= rk[2] ? 'B' : 'C'; rows.unshift(['Rank', '<b class="rank">' + R + '</b>'], ['Rings', W.boost.rings]); save.rank = save.rank || {}; const order = 'CBAS'; if (!save.rank[curLevel] || order.indexOf(R) > order.indexOf(save.rank[curLevel])) { save.rank[curLevel] = R; persist(); } }
+"""  if (W.boost) { const rk = W.boost.rank, t = run.time, R = t <= rk[0] ? 'S' : t <= rk[1] ? 'A' : t <= rk[2] ? 'B' : 'C'; rows.splice(0, 1, ['Rank', '<b class="rank">' + R + '</b>'], ['Rings', W.boost.rings]); save.rank = save.rank || {}; const order = 'CBAS'; if (!save.rank[curLevel] || order.indexOf(R) > order.indexOf(save.rank[curLevel])) { save.rank[curLevel] = R; persist(); } }
   rows.push(['All-time stars', allStars + ' / ' + (LEVELS.length * 3)]);""")
 # online: in-game rooms go back to the title instead of the Arcade lobby
 rep("function netGoLobby() {\n  const GN = window.GrokNet, me = room.me() || {};\n  room.markNavigating();",
@@ -129,7 +129,8 @@ onBtn('on-back', () => showCard('title-card'));""")
 rep("const CARDS = ['title-card', 'map-card', 'pause-card', 'complete-card', 'gameover-card', 'mp-card'];","const CARDS = ['title-card', 'map-card', 'pause-card', 'complete-card', 'gameover-card', 'mp-card', 'online-card'];")
 rep("function netDebug() {", rd('i_online.js')+"function netDebug() {")
 # extra modules before the level builders
-rep("function rushEnv(c) {", rd('c_pets.js')+"\n"+rd('d_boost.js')+"\n"+rd('e_decor.js')+"\n"+rd('j_worlds.js')+"\nfunction rushEnv(c) {")
+rep("function rushEnv(c) {", rd('c_pets.js')+"\n"+rd('d_boost.js')+"\n"+rd('e_decor.js')+"\n"+rd('j_worlds.js')+"\n"+rd('k_rush2.js')+"\nfunction rushEnv(c) {")
 rep("  W, P, run, cam, startLevel, LEVELS,", "  W, P, run, cam, startLevel, LEVELS, renderer, updateCamera,")
+rep("  shadowy(g, true, false);\n  g.position.set(x, top, z); W.root.add(g);\n  W.things.push({ update() {\n    if (g.userData.star)", "  shadowy(g, true, false);\n  g.position.set(x, top, z); W.root.add(g); W.goalPos = center || new V3(x, top, z); W.goalType = type;\n  W.things.push({ update() {\n    if (g.userData.star)")
 open(P,'w').write(s)
 print('patched', len(s))

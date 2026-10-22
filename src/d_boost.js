@@ -72,7 +72,7 @@ function nearestOnRail(R, p) {
     const cx = a.x + abx * k, cy = a.y + aby * k, cz = a.z + abz * k;
     const dh = (p.x - cx) * (p.x - cx) + (p.z - cz) * (p.z - cz);
     const dy = p.y - (cy + 0.12);
-    if (dh > 1.0 || dy < -0.7 || dy > 1.1) continue;
+    if (dh > 2.9 || dy < -0.7 || dy > 1.1) continue;
     const d = dh + dy * dy * 0.3;
     if (d < bd) { bd = d; best = { s: R.cum[i - 1] + Math.sqrt(l2) * k, y: cy }; }
   }
@@ -261,6 +261,19 @@ function boostTouchEnemies() {
 function boostPost(dt) {
   if (P.state === 'dead' || P.frozen) return;
   if (P.grounded) P.airDashed = false;
+  // fell off a rail or a jump into the valley below: never leave the player stranded down there.
+  // Costs the rings you carry (or a heart with none), then puts you back on the last solid ground.
+  if (P.grounded && !P.grind && P.pos.y > -1.5) { if (!W.boost.safe) W.boost.safe = new V3(); W.boost.safe.copy(P.pos); W.boost.safeYaw = P.facing; }
+  if (P.pos.y < -3.5 && !P.grind) {
+    if (!W.boost.safe) W.boost.safe = new V3(0, 0.2, 10);
+    const had = W.boost.rings;
+    if (had > 0) { W.boost.rings = 0; showToast('<b>SPLASH!</b> You dropped your ' + had + ' rings. Back on track!', 2.2); }
+    else { P.health = Math.max(1, P.health - 1); updateHUD(true); showToast('<b>SPLASH!</b> That cost a heart. Back on track!', 2.2); }
+    P.meter = Math.max(0, P.meter - 20);
+    P.pos.copy(W.boost.safe); P.pos.y += 0.3; P.vel.set(0, 0, 0); P.facing = W.boost.safeYaw || 0; P.boosting = false;
+    P.invuln = HURT_INVULN; cam.target.set(P.pos.x, P.pos.y + 1.4, P.pos.z); Snd.S.hurt();
+    return;
+  }
   // crash: slamming into a wall at boost speed has a real cost
   if (P.crashV > 21 && P.state !== 'hurt' && P.invuln <= 0) boostCrash(P.crashV);
   P.crashV = 0;

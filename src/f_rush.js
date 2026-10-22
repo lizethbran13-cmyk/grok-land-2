@@ -11,14 +11,15 @@ function rushEnv(c) {
   for (let i = 0; i < 22; i++) { // rolling hills ring the zone so the horizon is never empty
     const a = (i / 22) * TAU + hr() * 0.2, d = 230 + hr() * 60, s = 40 + hr() * 40;
     const hill = M(G.sphereLo, [0x59d65a, 0x3fbf4a, 0x86e05a][i % 3], s, s * (0.5 + hr() * 0.4), s);
-    hill.position.set(Math.cos(a) * d, -14, Math.sin(a) * d - 180); (W.deco || W.root).add(hill);
+    hill.position.set(Math.cos(a) * d, -14, Math.sin(a) * d * 1.75 - 300); (W.deco || W.root).add(hill); // ellipse around the longer course
   }
   skyClouds(24, 40, 80, 80, 260, 5);
   W.scenery = (dt, t) => { water.position.y = -3.2 + Math.sin(t * 0.8) * 0.08; };
 }
+const MEADOW_RANK = [24, 32, 45];
 function buildRush() {
   rushEnv();
-  boostSetup({ rank: [18, 26, 40] });
+  boostSetup({ rank: MEADOW_RANK });
   // ---------- START PLAZA + BOOST STRAIGHT (top 0, z 20 .. -130) ----------
   gnd(0, 0, -55, 74, 150, 8, 'park');
   const path = new THREE.Mesh(boxGeoUV(12, 0.06, 146, 3, 1), texMat(0xe8d6a8, 'speck')); path.position.set(0, 0.03, -57); W.deco.add(path);
@@ -108,17 +109,48 @@ function buildRush() {
   addHoop(3, 5.6, -300, [0, 0.5, -1], 31);
   coinLine(3, 7.5, -306, 3, 6, -316, 4);
   addHint(6.5, 4, -296, 'Jump through the pink <b>DASH HOOP</b> to fly over the water!', null, 2.4);
-  // ---------- GOAL FIELD (top 2) ----------
+  // ---------- WINDMILL FIELD (top 2, z -316 .. -368) ----------
   gnd(0, 2, -342, 44, 52, 10, 'park');
+  rushLane(0, 2, -317, -367, 10, 0xe8d6a8);
   addCheckpoint(-7, 2, -322, 0);
   addDashPanel(0, 2, -330, 0, 34);
-  coinLine(0, 3, -334, 0, 3, -350, 6);
-  addGoalRing(0, 2, -356);
-  addPet('torty', 9, 2, -352, -0.8, 'Shell-tough run! Tortuga Tech clocked your time. Get under <b>' + 18 + ' seconds</b> for an <b>S RANK</b>!');
-  dBleachers(-14, 2, -350, 10, Math.PI / 2); dBleachers(16, 2, -340, 8, -Math.PI / 2);
-  dFlagLine(-12, -362, 12, -362, 6);
-  for (const s of [-1, 1]) { const pole = M(G.cyl8, 0xf4efe6, 0.1, 6, 0.1); pole.position.set(s * 12, 5, -362); W.deco.add(pole); }
-  for (let x = -18; x <= 18; x += 6) dTree(x, 2, -366, 0.9);
-  dLamp(-6, 2, -340); dLamp(6, 2, -344);
+  coinLine(0, 3, -334, 0, 3, -358, 8);
+  addWalker(-2, 2, -346); addWalker(2, 2, -352);
+  dCrops(-14, 2, -332, 10, 12, 0xffc21a); dCrops(-14, 2, -350, 10, 10, 0x59d65a); addWindmill(15, 2, -334, 9);
+  for (let i = 0; i < 4; i++) dHay(13 + (i % 2) * 2.4, 2, -350 - (i >> 1) * 2.6, 2, 2, 1.4);
+  dScarecrow(-14, 2, -362); dLamp(-7, 2, -340); dLamp(7, 2, -350); dRocks(18, 2, -362, 4, 41);
+  dHedgeWall(-21.4, 2, -342, 1.2, 52, 2.2); dHedgeWall(21.4, 2, -342, 1.2, 52, 2.2);
+  // ---------- LAKE RAIL 2 ----------
+  addRail([[0, 2.3, -360], [0, 2.4, -370], [3, 3.6, -384], [7, 4.4, -398], [4, 4.8, -412], [-3, 4.6, -426], [-5, 4.2, -440], [-1, 4.3, -452], [0, 4.3, -460], [0, 4.3, -466]]);
+  coinLine(3, 4.5, -384, 7, 5.3, -398, 4); coinLine(-3, 5.5, -426, -5, 5.1, -440, 4);
+  addPod(-6, 8, -390); addPod(-8, 9, -402); addPod(-6, 9, -414);
+  addFlyer('gull', 10, 8, -420); addFlyer('gull', -12, 9, -400);
+  for (let i = 0; i < 4; i++) { const lp = M(G.cyl, 0x3fbf4a, 0.9, 0.03, 0.9); lp.position.set(-12 + i * 7, -3.15, -380 - i * 18); W.deco.add(lp); }
+  // ---------- SUNFLOWER HILLS (top 4, z -450 .. -530) ----------
+  gnd(0, 4, -490, 46, 80, 12, 'park');
+  rushLane(0, 4, -451, -529, 10, 0xe8d6a8);
+  addCheckpoint(-6, 4, -456, 0);
+  addDashPanel(0, 4, -462, 0, 32);
+  loopRail(0, 4, -474, 0x3ff0ff);
+  coinRing(-10, 5.4, -488, 2.2, 8); coinRing(11, 5.4, -500, 2.2, 8);
+  addBee(-7, 6.5, -470); addBee(8, 6.5, -512); addWalker(-6, 4, -518); addWalker(7, 4, -478);
+  for (let z = -454; z >= -526; z -= 4) { dSunflower(-15 - ((z / 4) & 1) * 1.2, 4, z, 1); dSunflower(-18, 4, z - 2, 1.1); dSunflower(15 + ((z / 4) & 1) * 1.2, 4, z - 1, 1); }
+  dBeehive(-11, 4, -462); dBeehive(-11, 4, -466); dBeehive(11, 4, -506); dWagon(11, 4, -466, 0.2); dScarecrow(-11, 4, -500); dPicnic(-11, 4, -520, 0.3, 0xff4d4d);
+  dHedgeWall(-22.4, 4, -490, 1.2, 80, 2.2); dHedgeWall(22.4, 4, -490, 1.2, 80, 2.2);
+  addHoop(3, 5.6, -526, [0, 0.5, -1], 31);
+  coinLine(3, 7.5, -532, 3, 6, -540, 3);
+  // ---------- GOAL FIELD (top 2, z -540 .. -600) ----------
+  gnd(0, 2, -570, 44, 60, 10, 'park');
+  rushLane(0, 2, -541, -599, 10, 0xe8d6a8);
+  addCheckpoint(-7, 2, -546, 0);
+  addDashPanel(0, 2, -552, 0, 34);
+  coinLine(0, 3, -556, 0, 3, -576, 6);
+  addGoalRing(0, 2, -584);
+  addPet('torty', 9, 2, -580, -0.8, 'Shell-tough run! Tortuga Tech clocked your time. Get under <b>' + MEADOW_RANK[0] + ' seconds</b> for an <b>S RANK</b>!');
+  dBleachers(-14, 2, -578, 10, Math.PI / 2); dBleachers(16, 2, -568, 8, -Math.PI / 2);
+  dFlagLine(-12, -592, 12, -592, 6);
+  for (const s of [-1, 1]) { const pole = M(G.cyl8, 0xf4efe6, 0.1, 6, 0.1); pole.position.set(s * 12, 5, -592); W.deco.add(pole); }
+  for (let x = -18; x <= 18; x += 6) dTree(x, 2, -596, 0.9);
+  dLamp(-6, 2, -566); dLamp(6, 2, -572); dFlowerBed(-12, 2, -556, 4, 2); dFlowerBed(12, 2, -556, 4, 2);
   W.titleFocus = new V3(0, 2, -40);
 }

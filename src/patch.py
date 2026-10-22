@@ -129,7 +129,7 @@ onBtn('on-back', () => showCard('title-card'));""")
 rep("const CARDS = ['title-card', 'map-card', 'pause-card', 'complete-card', 'gameover-card', 'mp-card'];","const CARDS = ['title-card', 'map-card', 'pause-card', 'complete-card', 'gameover-card', 'mp-card', 'online-card'];")
 rep("function netDebug() {", rd('i_online.js')+"function netDebug() {")
 # extra modules before the level builders
-rep("function rushEnv(c) {", rd('c_pets.js')+"\n"+rd('d_boost.js')+"\n"+rd('e_decor.js')+"\n"+rd('j_worlds.js')+"\n"+rd('k_rush2.js')+"\nfunction rushEnv(c) {")
+rep("function rushEnv(c) {", rd('c_pets.js')+"\n"+rd('d_boost.js')+"\n"+rd('e_decor.js')+"\n"+rd('j_worlds.js')+"\n"+rd('k_rush2.js')+"\n"+rd('l_gaps.js')+"\nfunction rushEnv(c) {")
 rep("  W, P, run, cam, startLevel, LEVELS,", "  W, P, run, cam, startLevel, LEVELS, renderer, updateCamera,")
 rep("  shadowy(g, true, false);\n  g.position.set(x, top, z); W.root.add(g);\n  W.things.push({ update() {\n    if (g.userData.star)", "  shadowy(g, true, false);\n  g.position.set(x, top, z); W.root.add(g); W.goalPos = center || new V3(x, top, z); W.goalType = type;\n  W.things.push({ update() {\n    if (g.userData.star)")
 open(P,'w').write(s)

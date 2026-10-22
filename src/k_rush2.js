@@ -115,7 +115,6 @@ function buildCanyonRush() {
   coinLine(-5, 4.2, -158, -7, 3.4, -172, 4);
   addPod(7, 5, -140); addPod(9, 6, -151); addPod(10, 6.5, -162); addPod(8, 6, -174); addPod(5, 5, -186); addPod(3, 4, -197);
   addItem('star', 10, 9.7, -162, { idx: 1 });
-  for (let z = -140; z >= -196; z -= 14) { const t = M(G.box, 0x7a4a24, 0.5, 6, 0.5); t.position.set(-12, -1, z); W.deco.add(t); } // old trestle posts in the river
   // ---------- MESA B: the camp + loop (top 0, z -207 .. -283) ----------
   gnd(0, 0, -245, 44, 76, 10, 'mesa');
   rushLane(0, 0, -208, -282, 10, 0xf0cf8e, 0xc8643a);
@@ -154,7 +153,6 @@ function buildCanyonRush() {
   addRail([[0, 0.3, -388], [0, 0.5, -398], [4, 3, -412], [8, 4.5, -428], [6, 5, -444], [0, 4.6, -458], [-4, 3.6, -472], [0, 2.6, -484], [0, 2.3, -494], [0, 2.3, -500]], { glow: 0xffb43a });
   coinLine(4, 3.9, -412, 8, 5.4, -428, 4); coinLine(0, 5.4, -458, -4, 4.4, -472, 4);
   addPod(-6, 6, -420); addPod(-8, 7, -434); addPod(-6, 7, -448);
-  for (let z = -410; z >= -480; z -= 14) { const t = M(G.box, 0x7a4a24, 0.5, 8, 0.5); t.position.set(12, 0, z); W.deco.add(t); }
   // ---------- TRADING POST + GOAL (top 2, z -490 .. -570) ----------
   gnd(0, 2, -530, 44, 80, 12, 'mesa');
   rushLane(0, 2, -491, -569, 12, 0xf0cf8e, 0xc8643a);
@@ -174,7 +172,7 @@ function buildCanyonRush() {
   // far walls so the long canyon keeps layered rock past the first stretch
   const wr = mulberry(77);
   for (const s of [-1, 1]) for (let i = 0; i < 10; i++) { const h = 18 + wr() * 16, w = 14 + wr() * 10, z = -230 - i * 36; const m = styledMesh(w, h + 6, 30, i % 2 ? 'mesa' : 'redrock'); m.position.set(s * (36 + wr() * 10), h / 2 - 6, z); W.deco.add(m); }
-  rushGap(-130, -207, 'canyon', 11); rushGap(-397, -490, 'canyon', 23);
+  gapWaterSurface(0x2b8f96, 0x7fd6d0); gapRiver(-130, -207, 11, -1); gapRiver(-397, -490, 23, -1);
   W.titleFocus = new V3(0, 2, -40);
 }
 const CANYON_RANK = [23, 30, 42];
@@ -219,7 +217,6 @@ function buildSpeedwayRush() {
   addPod(2, 6, -150); addPod(4, 7, -162); addPod(4, 7.5, -174); addPod(2, 7, -186);
   addItem('star', 4, 10.7, -174, { idx: 1 });
   addHint(-3, 0, -124, '<b>BANKED RAIL!</b> Grind the big sweeper over the bay. Pods in the middle hide a medal...', null, 2.4);
-  for (let z = -140; z >= -224; z -= 14) { const b = M(G.box, 0xffd23f, 1.2, 0.8, 0.9); b.position.set(-14, -3, z); W.deco.add(b); } // buoys
   // ---------- CRASH-TEST LAB + LOOP (top 0, z -227 .. -303) ----------
   gnd(0, 0, -265, 44, 76, 10, 'tech');
   rushLane(0, 0, -228, -302, 12, 0x3a3f4a, 'race');
@@ -253,7 +250,6 @@ function buildSpeedwayRush() {
   addRail([[0, 0.3, -408], [0, 0.5, -418], [-6, 3, -432], [-12, 5, -446], [-10, 5.4, -462], [0, 5, -472], [8, 4, -484], [4, 2.8, -496], [0, 2.3, -506], [0, 2.3, -512]], { glow: 0x3ff0ff });
   coinLine(-6, 3.9, -432, -12, 5.9, -446, 4); coinLine(0, 5.9, -472, 8, 4.9, -484, 4);
   addPod(-2, 7, -440); addPod(-3, 8, -452);
-  for (let z = -430; z >= -500; z -= 14) { const b = M(G.box, 0xffd23f, 1.2, 0.8, 0.9); b.position.set(14, -3, z); W.deco.add(b); }
   // ---------- WINNER'S CIRCLE + GOAL (top 2, z -502 .. -582) ----------
   gnd(0, 2, -542, 44, 80, 12, 'tech');
   rushLane(0, 2, -503, -581, 14, 0x3a3f4a, 'race');
@@ -275,7 +271,7 @@ function buildSpeedwayRush() {
   // Tortuga Tech HQ on the horizon
   const hq = styledMesh(40, 30, 20, 'tech'); hq.position.set(-70, 10, -620); W.deco.add(hq);
   const dome = M(G.sphereLo, 0x3a9a6a, 16, 10, 12); dome.position.set(-70, 25, -620); W.deco.add(dome);
-  rushGap(-130, -227, 'tech', 5); rushGap(-417, -502, 'tech', 9);
+  gapWaterSurface(0x1f86a8, 0x8fe3ff); gapLake(-130, -227, 5, { buoyX: 21, left: { dockX: -24, grand: 1 }, right: { dockX: 24 } }); gapLake(-417, -502, 9, { buoyX: 18, left: { dockX: -24 }, right: { dockX: 24, grand: 1 } });
   W.titleFocus = new V3(0, 2, -40);
 }
 const SPEED_RANK = [24, 32, 45];

@@ -152,5 +152,6 @@ function buildRush() {
   for (const s of [-1, 1]) { const pole = M(G.cyl8, 0xf4efe6, 0.1, 6, 0.1); pole.position.set(s * 12, 5, -592); W.deco.add(pole); }
   for (let x = -18; x <= 18; x += 6) dTree(x, 2, -596, 0.9);
   dLamp(-6, 2, -566); dLamp(6, 2, -572); dFlowerBed(-12, 2, -556, 4, 2); dFlowerBed(12, 2, -556, 4, 2);
+  gapWaterSurface(0x2f8fd8, 0xa8e0ff); gapPond(-368, -450, 41);
   W.titleFocus = new V3(0, 2, -40);
 }

@@ -6957,7 +6957,7 @@ requestAnimationFrame(frame);
 
 // debug/test hook (harmless in production)
 window.__grok = {
-  W, P, run, cam, startLevel, LEVELS, renderer, input, keys, touchState, save, openMap, setEasy, goTitle, NET, netDebug: () => netDebug(),
+  W, P, run, cam, startLevel, LEVELS, renderer, updateCamera, input, keys, touchState, save, openMap, setEasy, goTitle, NET, netDebug: () => netDebug(),
   get mode() { return mode; },
   get card() { return curCard; },
   get mapSel() { return mapSel; },

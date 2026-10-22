@@ -130,6 +130,6 @@ rep("const CARDS = ['title-card', 'map-card', 'pause-card', 'complete-card', 'ga
 rep("function netDebug() {", rd('i_online.js')+"function netDebug() {")
 # extra modules before the level builders
 rep("function rushEnv(c) {", rd('c_pets.js')+"\n"+rd('d_boost.js')+"\n"+rd('e_decor.js')+"\n"+rd('j_worlds.js')+"\nfunction rushEnv(c) {")
-rep("  W, P, run, cam, startLevel, LEVELS,", "  W, P, run, cam, startLevel, LEVELS, renderer,")
+rep("  W, P, run, cam, startLevel, LEVELS,", "  W, P, run, cam, startLevel, LEVELS, renderer, updateCamera,")
 open(P,'w').write(s)
 print('patched', len(s))
